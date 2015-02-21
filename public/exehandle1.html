@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>OiSYS Application</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+		<script src=" https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.	3.2/js/bootstrap.min.js"></script>
+			// added info
+
+		<script type = "text/javascript">
+			$(document).ready( function (){
+
+				var $name = $('.in');
+				var $decription = $('.dec');
+				var $price = $('.pri');
+				$('#get').on('click', function(){
+					$.ajax({
+						url:"/products",
+						type:"get",
+						success:function(list){
+
+							$.each(list,function(i,list){
+								
+								addorder(list);
+
+							})
+							
+						},
+						error:function(){
+
+							alert("page not loaded");
+
+						}
+
+
+
+					});
+
+
+				});
+
+
+
+				$('#post').on('click', function(){
+					var productlist= {
+						name:$name.val(),
+						decription:$decription.val(),
+						price:$price.val(),
+					}
+					$.ajax({
+
+						type:'post',
+						url:'/products',
+						data: productlist,
+						success:function(list){
+
+							addorder(list);
+
+						}
+
+					})
+
+					$('body').on('click',"#abc",function(){
+						$(this).parent('div').remove();
+
+
+					})
+
+
+				});
+
+				var temp = $('#cont').html();
+				var source = Handlebars.compile(temp);
+
+				function addorder(list){
+
+					$('#body').append(source({list:list}));
+				};
+
+
+
+
+			});
+
+  				
+   		 		
+		</script>
+	</head>
+	<body>
+	<div class="container">
+		<div class="row">
+			<div class="well col-sm-12 col-md-6">
+			<h1>This is product information</h1>
+				<div>
+					<div class="input-group">
+					name:<input class="in form-control col-md-8" type = "text" name="name"/><br/>
+					decription:<input class="dec form-control" type = "text" name="decription"/><br/>
+					price:<input class="pri form-control" type = "text" name="price"/></br>
+					<button id="post"> submit</button></br>
+					<button id="get">display</button>
+				</div>
+					
+				</div>
+
+		</div>	
+			
+		<div id ="body">
+			<script id ="cont" type="text/x-handlebars-template">
+
+			{{#list}}
+				<div class=" well col-sm-12 col-md-6">
+				<li>{{name}}</li>
+				<li>{{decription}}</li>
+				<li>{{price}}</li>
+				<button id="abc"> delete</button>
+				</div>
+
+
+
+			{{/list}}
+
+			</script>
+		</div>
+
+
+
+
+		</div>	
+			
+	</div>
+
+
+	</body>
+</html>
