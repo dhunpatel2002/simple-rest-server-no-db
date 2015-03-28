@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>OiSYS Application</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type = "text/javascript">
+			$(document).ready(function(){
+
+  				$(".sub").click(function(event){
+  					
+   		 			event.preventDefault();
+   		 			//alert("input[name^='decription']");
+   		 		
+   		 			//var data = $(".in").val();
+   		 			
+   		 			var values = [];
+					$('.in').each(function() {
+    					values[this.name] = this.value;
+						});
+					//console.log(values["name"]);
+					//console.log(values["decription"]);
+					//console.log(values["price"]);
+			
+					$.ajax({
+						type: "POST",
+						url: "/products",
+						data: { name : values["name"] , decription: values["decription"], price:values["price"] },
+						dataType: "html",
+						success : function(data){
+						var cd= eval("("+data+")");
+						console.log(cd);
+							$("#div1").append(cd.name);
+							$("#div2").append(cd.decription);
+							$("#div3").append(cd.price);
+							//alert($("input[name='decription']"));
+   		 		
+
+							}
+
+						});
+				});
+			});
+
+   		 		
+		</script>
+	</head>
+	<body>
+		<h1>This is product information</h1>
+		<form  id="myid" name ="pro" method="post" action = "/products">
+			<p>name:<input class="in" type = "text" name="name"/></p>
+			<p>decription:<input class="in" type = "text" name="decription"/></p>
+			<p>price:<input class="in" type = "text" name="price"/></p>
+			<input type ="submit" value ="submit" class="sub"/>
+			
+		</form>	
+		<div id= "div1"></div>
+
+		<div id="div2"></div>	
+
+		<div id="div3"></div>
+			
+	</body>
+</html>

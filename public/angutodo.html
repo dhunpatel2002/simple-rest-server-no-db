@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html  data-ng-app="" >
+	<head >
+		<title>TO DO  Application</title>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+
+		
+	</head>
+	<body >
+			
+
+			
+		<h3 >this is angularjs</h3>
+		<div data-ng-controller="SimpleController">
+		name:
+		<br/>
+		<input type="text" data-ng-model="name"/>
+		<br/>
+		<ul>
+			<li data-ng-repeat="cust in customers | filter:name | orderBy:city ">{{cust.name | uppercase}} - {{cust.city | lowercase}}
+			</li>	
+		</ul>	
+		
+		</div>	
+
+		<script>
+		function SimpleController($scope){
+			$scope.customers = [{name:'Dave',city:'phonex'},
+			 {name:'Raj',city:'new jersey'},
+			 {name:'ketan',city:'taxas'}
+			 ];
+			}
+		</script>
+
+
+		 
+	
+	</body>
+
+</html> 
